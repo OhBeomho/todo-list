@@ -16,29 +16,32 @@ export default function (props: TodoListProps) {
   const todoListElements = todoList.map((todo, index) => (
     <TodoListItem key={index}>
       <b>{todo.text}</b>
-      <div className="buttons">
-        {!todo.finish ? (
+      <div>
+        <span className="buttons">
           <Button
             onClick={() => {
-              finishTodo("TODO::" + todo.id);
+              deleteTodo("TODO::" + todo.id);
               refreshItems();
             }}
-            style={{ color: "green" }}
+            style={{ color: "red" }}
           >
-            Finish
+            Delete
           </Button>
-        ) : (
-          <span style={{ color: "darkgreen", margin: 2 }}>Finished</span>
-        )}
-        <Button
-          onClick={() => {
-            deleteTodo("TODO::" + todo.id);
-            refreshItems();
-          }}
-          style={{ color: "red" }}
-        >
-          Delete
-        </Button>
+          {!todo.finish ? (
+            <Button
+              onClick={() => {
+                finishTodo("TODO::" + todo.id);
+                refreshItems();
+              }}
+              style={{ color: "green" }}
+            >
+              Finish
+            </Button>
+          ) : (
+            ""
+          )}
+        </span>
+        {todo.finish ? <span style={{ color: "darkgreen" }}>Finished</span> : ""}
       </div>
     </TodoListItem>
   ));
